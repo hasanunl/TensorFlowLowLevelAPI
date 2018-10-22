@@ -18,6 +18,14 @@ dataset = pd.read_csv('Churn_Modelling.csv')
 X = dataset.iloc[:, 3:13].values
 Y = dataset.iloc[:, 13].values
 
+# Encoding categorical data
+labelencoder_X_1 = LabelEncoder()
+X[:, 1] = labelencoder_X_1.fit_transform(X[:, 1])
+labelencoder_X_2 = LabelEncoder()
+X[:, 2] = labelencoder_X_2.fit_transform(X[:, 2])
+onehotencoder = OneHotEncoder(categorical_features = [1])
+X = onehotencoder.fit_transform(X).toarray()
+X = X[:, 1:]
 
 # Splitting the dataset into the Training set and Test set
 X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size = 0.2, random_state = 0)
